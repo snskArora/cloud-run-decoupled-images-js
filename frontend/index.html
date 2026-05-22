@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform Deployment Activity</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" aria-label="Platform logo" role="img">
+          <rect x="10" y="10" width="18" height="18" rx="4" fill="currentColor"></rect>
+          <rect x="36" y="10" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="4"></rect>
+          <rect x="10" y="36" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="4"></rect>
+          <rect x="36" y="36" width="18" height="18" rx="4" fill="currentColor"></rect>
+        </svg>
+        <div>
+          <p class="eyebrow">Cloud Run exercise</p>
+          <h1>Platform Deploy</h1>
+        </div>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#overview" class="nav-link active">Overview</a>
+        <a href="#status" class="nav-link">Service status</a>
+        <a href="#notes" class="nav-link">Deployment notes</a>
+      </nav>
+    </aside>
+
+    <div class="content-wrap">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Independent services</p>
+          <p class="subtitle">Frontend reads its backend target from runtime configuration.</p>
+        </div>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch theme">◐</button>
+      </header>
+
+      <main id="main" class="main-content">
+        <section class="hero card" id="overview">
+          <div>
+            <p class="eyebrow">Deployment validation</p>
+            <h2>Website status depends on both services being deployed correctly.</h2>
+            <p class="lede">The frontend is a separate container from the backend. Once the backend URL is wired into the frontend deployment, this page will fetch live service status from the API.</p>
+          </div>
+          <div class="hero-metrics">
+            <div>
+              <span class="metric-label">Frontend service</span>
+              <strong>Cloud Run</strong>
+            </div>
+            <div>
+              <span class="metric-label">Backend service</span>
+              <strong>Cloud Run</strong>
+            </div>
+            <div>
+              <span class="metric-label">Runtime API base URL</span>
+              <strong id="apiBaseUrl">Loading…</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid-two" id="status">
+          <article class="card status-card">
+            <div class="card-heading">
+              <p class="eyebrow">API connection</p>
+              <h3>Backend connectivity</h3>
+            </div>
+            <div id="statusBadge" class="badge badge-pending">Checking</div>
+            <p id="messageText">Attempting to contact backend service.</p>
+            <dl class="details">
+              <div><dt>Service</dt><dd id="serviceName">-</dd></div>
+              <div><dt>Environment</dt><dd id="environment">-</dd></div>
+              <div><dt>Version</dt><dd id="version">-</dd></div>
+              <div><dt>Timestamp</dt><dd id="timestamp">-</dd></div>
+            </dl>
+          </article>
+
+          <article class="card" id="notes">
+            <div class="card-heading">
+              <p class="eyebrow">Candidate hints</p>
+              <h3>What to configure</h3>
+            </div>
+            <ul class="notes-list" role="list">
+              <li>Build and push frontend and backend images separately.</li>
+              <li>Deploy backend first and expose its HTTPS URL.</li>
+              <li>Deploy frontend with <code>API_BASE_URL</code> set to that backend URL.</li>
+              <li>Ensure backend CORS allows the frontend origin if you lock it down.</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+   <script src="/config.js"></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>
